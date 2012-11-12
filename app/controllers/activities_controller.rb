@@ -25,7 +25,7 @@ class ActivitiesController < ApplicationController
   # GET /activities/new.json
   def new
     @activity = Activity.new
-
+    @activity.details.build
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @activity }
