@@ -1,0 +1,6 @@
+%h1 New address
+= form_for @address do |f|
+  = render 'form', f: f
+  .actions
+    = f.submit 'Save'
+= link_to 'Back', addresses_path

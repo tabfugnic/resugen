@@ -1,0 +1,4 @@
+Class User
+  include Mongoid::Document
+  
+  
