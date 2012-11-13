@@ -11,7 +11,7 @@ class Activity
   validates_presence_of :name, :begin_date
 
   embeds_many :details
-  belongs_to :user
+  embedded_in :user
   has_one :address
 
   accepts_nested_attributes_for :details, :address

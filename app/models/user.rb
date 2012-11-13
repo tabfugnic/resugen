@@ -89,7 +89,7 @@ class User
   field :family_name, :as => :last_name, :type => String, :default => ""
   attr_accessible :given_name, :family_name, :email, :password, :password_confirmation, :remember_me, :created_at, :updated_at
 
-  has_many :activities
+  embeds_many :activities
   has_one :address
 
 end
