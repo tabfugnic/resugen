@@ -10,7 +10,7 @@ class Address
 
   field :zip_code, type: Integer
   
-  validates_presence_of :address1, :city, :country, :zip_code, :state
+  validates_presence_of :city, :country
 
   belongs_to :user
   belongs_to :activity
