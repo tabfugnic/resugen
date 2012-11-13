@@ -1,3 +1,4 @@
+= content ||= "Content"
 = form_for @activity do |f|
   - if @activity.errors.any?
     #error_explanation
@@ -21,8 +22,18 @@
   .field
     = f.label :end_date
     = f.text_field :end_date, class: "datepicker"
+  - if :_type == "Education"
+    .field
+      = f.label :score
+      = f.number_field :score
+    .field
+      = f.label :max_score
+      = f.number_field :max_score
   .field
     = f.fields_for :details do |form|
-      = render "/details/form", f: form
+      = render "/details/form", f: form, content: content
+  .field
+    = f.fields_for :address do |form|
+      = render "/addresses/form", f: form
   .actions
     = f.submit 'Save'
