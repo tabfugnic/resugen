@@ -2,7 +2,7 @@ class ActivitiesController < ApplicationController
   # GET /activities
   # GET /activities.json
   def index
-    @activities = Activity.where("user.id" => current_user.id).all
+    @activities = current_user.activities
 
     respond_to do |format|
       format.html # index.html.erb
@@ -13,7 +13,7 @@ class ActivitiesController < ApplicationController
   # GET /activities/1
   # GET /activities/1.json
   def show
-    @activity = Activity.where("user.id" => current_user.id, id: params[:id]).first 
+    @activity = current_user.activities.find(params[:id])
 
     respond_to do |format|
       format.html # show.html.erb
@@ -34,16 +34,15 @@ class ActivitiesController < ApplicationController
 
   # GET /activities/1/edit
   def edit
-    @activity = Activity.find(params[:id])
+    @activity = current_user.activities.find(params[:id])
   end
 
   # POST /activities
   # POST /activities.json
   def create
-    @user = current_user
-    @activity = @user.activities.new(params[:activity])
-    p @activity
-    p @user
+    @activity = Activity.new(params[:activity])
+    current_user.activities << @activity
+
     respond_to do |format|
       if @activity.save
         @activity = @user.activities.last
@@ -59,7 +58,7 @@ class ActivitiesController < ApplicationController
   # PUT /activities/1
   # PUT /activities/1.json
   def update
-    @activity = Activity.find(params[:id])
+    @activity = current_user.activities.find(params[:id])
 
     respond_to do |format|
       if @activity.update_attributes(params[:activity])
@@ -75,7 +74,7 @@ class ActivitiesController < ApplicationController
   # DELETE /activities/1
   # DELETE /activities/1.json
   def destroy
-    @activity = Activity.find(params[:id])
+    @activity = current_user.activities.find(params[:id])
     @activity.destroy
 
     respond_to do |format|
