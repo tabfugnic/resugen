@@ -26,6 +26,7 @@ group :assets do
 end
 
 group :test, :development do
+  gem 'thin'
   gem 'database_cleaner'
   gem 'rspec-rails'
   gem 'mongoid-rspec'
