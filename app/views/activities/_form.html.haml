@@ -6,7 +6,6 @@
       %ul
         - @activity.errors.full_messages.each do |msg|
           %li= msg
-  = f.hidden_field :user_id, value: current_user.id
   .field
     = f.label :name
     = f.text_field :name
