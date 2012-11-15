@@ -2,7 +2,7 @@ class ActivitiesController < ApplicationController
   # GET /activities
   # GET /activities.json
   def index
-    @activities = Activity.all
+    @activities = Activity.where("user.id" => current_user.id).all
 
     respond_to do |format|
       format.html # index.html.erb
@@ -13,7 +13,7 @@ class ActivitiesController < ApplicationController
   # GET /activities/1
   # GET /activities/1.json
   def show
-    @activity = Activity.find(params[:id])
+    @activity = Activity.where("user.id" => current_user.id, id: params[:id]).first 
 
     respond_to do |format|
       format.html # show.html.erb
@@ -40,10 +40,13 @@ class ActivitiesController < ApplicationController
   # POST /activities
   # POST /activities.json
   def create
-    @activity = Activity.new(params[:activity])
-
+    @user = current_user
+    @activity = @user.activities.new(params[:activity])
+    p @activity
+    p @user
     respond_to do |format|
       if @activity.save
+        @activity = @user.activities.last
         format.html { redirect_to @activity, notice: 'Activity was successfully created.' }
         format.json { render json: @activity, status: :created, location: @activity }
       else
