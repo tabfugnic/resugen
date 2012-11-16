@@ -2,7 +2,6 @@
 
 %table
   %tr
-    %th User
     %th Name
     %th Title
     %th Begin date
@@ -13,7 +12,6 @@
 
   - @activities.each do |activity|
     %tr
-      %td= activity.user
       %td= activity.name
       %td= activity.title
       %td= activity.begin_date

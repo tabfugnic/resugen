@@ -92,4 +92,13 @@ class User
   embeds_many :activities
   has_one :address
 
+  ## 
+  # to_s
+  # Getting the string of a user instance
+  # returns the email.
+  ##
+  def to_s
+    return email
+  end
+
 end
