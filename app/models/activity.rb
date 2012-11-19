@@ -15,6 +15,14 @@ class Activity
   has_one :address
 
   accepts_nested_attributes_for :details, :address
+
+  def ending
+    if end_date == nil or end_date > Date.today
+      return "Present"
+    else
+      return end_date
+    end
+  end
   
 end
 
