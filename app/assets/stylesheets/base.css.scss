@@ -28,6 +28,36 @@ body {
   line-height: 18px;
 }
 
+h1, h2, h3, h4, h5, h6 {
+  font-weight: bold;
+}
+
+
+h1 {
+  font-size: 2.2em;
+  padding: 15px 0;
+}
+
+h2 {
+  font-size: 1.8em;
+}
+
+h3 {
+  font-size: 1.6em;
+}
+
+h4 {
+  font-size: 1.4em;
+}
+
+h5 {
+  font-size: 1.2em;
+}
+
+h6 {
+  font-size: 1.1em;
+}
+
 a {
   color: #900;
   text-decoration: none;
@@ -44,14 +74,23 @@ form {
     &.field, &.actions {
       margin-bottom: 10px;
       label {
-        clear: both;
-        display: block;
+        display: inline;
+        float: left;
+        width: 125px;
       }
       input[type='text'], textarea, select {
-        width: 300px;
+        width: 400px;
       }
     }
   }
+}
+
+table {
+  width: 100%;
+}
+
+th {
+  font-weight: bold;
 }
 
 #notice {
