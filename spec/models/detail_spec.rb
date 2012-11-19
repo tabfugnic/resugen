@@ -1,5 +1,6 @@
 require 'spec_helper'
 
 describe Detail do
-  pending "add some examples to (or delete) #{__FILE__}"
+  let(:detail) { mock_model Detail }
+  it { detail.should be_valid }
 end
