@@ -5,22 +5,16 @@
     %th Name
     %th Title
     %th Begin date
+    %th End Date
+    %th Details Count
     %th Type
     %th
     %th
     %th
 
-  - @activities.each do |activity|
-    %tr
-      %td= activity.name
-      %td= activity.title
-      %td= activity.begin_date
-      %td= activity._type
-      %td= link_to 'Show', activity
-      %td= link_to 'Edit', edit_activity_path(activity)
-      %td= link_to 'Destroy', activity, method: :delete, data: { confirm: 'Are you sure?' }
-
+  = render partial: @activities
 %br
 
 = link_to 'New Employment', new_activity_path({_type: Employment})
 = link_to 'New School', new_activity_path({_type: Education})
+= link_to 'New Art', new_activity_path({_type: Art})

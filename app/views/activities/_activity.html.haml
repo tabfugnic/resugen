@@ -1,0 +1,10 @@
+%tr
+  %td= activity.name
+  %td= activity.title
+  %td= activity.begin_date
+  %td= activity.end_date
+  %td= activity._type
+  %td= activity.details.count
+  %td= link_to 'Show', activity
+  %td= link_to 'Edit', edit_activity_path(activity)
+  %td= link_to 'Destroy', activity, method: :delete, data: { confirm: 'Are you sure?' }
