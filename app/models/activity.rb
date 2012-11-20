@@ -9,6 +9,8 @@ class Activity
   field :end_date, type: Date
   
   validates_presence_of :name, :begin_date
+  validate :end_date_is_not_before_begin_date, 
+           :begin_date_is_not_in_the_future
 
   embeds_many :details
   embedded_in :user
@@ -16,12 +18,29 @@ class Activity
 
   accepts_nested_attributes_for :details, :address
 
+  ##
+  # Ending Method
+  #
+  # Prettify the way end_date looks. Display "Present"
+  # when nil or greater than today's date.
+  ##
   def ending
     if end_date == nil or end_date > Date.today
       return "Present"
     else
       return end_date
     end
+  end
+
+  private
+  # Validation method
+  def end_date_is_not_before_begin_date
+    errors.add(:end_date, "can't be before the begin_date") if end_date < begin_date
+  end
+
+  # Validation method  
+  def begin_date_is_not_in_the_future
+    errors.add(:begin_date, "can't be in the future") if begin_date > Date.today
   end
   
 end
