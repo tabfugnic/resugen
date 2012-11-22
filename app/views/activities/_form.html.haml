@@ -14,7 +14,7 @@
     = f.text_field :title
   .field
     = f.label :summary
-    = f.text_area :summary
+    = f.text_area :summary, rows: 7
   .field
     = f.label :begin_date
     = f.text_field :begin_date, value: Date.today, class: "datepicker"
@@ -29,6 +29,8 @@
       = f.label :max_score
       = f.number_field :max_score
   .field
+    = f.label :details
+    %br
     = f.fields_for :details do |form|
       = render "/details/form", f: form, content: content
   .field

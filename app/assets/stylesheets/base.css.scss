@@ -81,6 +81,12 @@ form {
       input[type='text'], textarea, select {
         width: 400px;
       }
+      .field {
+        padding-left: 10px;
+        input[type='text'], textarea, select {
+          width: 390px;
+        }
+      }
     }
   }
 }
