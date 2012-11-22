@@ -25,7 +25,7 @@ class ActivitiesController < ApplicationController
   # GET /activities/new.json
   def new
     @activity = Activity.new
-    @activity.details.build
+    5.times { @activity.details.build }
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @activity }
@@ -35,12 +35,14 @@ class ActivitiesController < ApplicationController
   # GET /activities/1/edit
   def edit
     @activity = current_user.activities.find(params[:id])
+    (5 - @activity.details.count).times { @activity.details.build }
   end
 
   # POST /activities
   # POST /activities.json
   def create
     @activity = Activity.new(params[:activity])
+    @activity.details.keep_if { |d| d.content.present? }
     current_user.activities << @activity
 
     respond_to do |format|
@@ -58,6 +60,7 @@ class ActivitiesController < ApplicationController
   # PUT /activities/1.json
   def update
     @activity = current_user.activities.find(params[:id])
+    @activity.details.keep_if { |d| d.content.present? }
 
     respond_to do |format|
       if @activity.update_attributes(params[:activity])
