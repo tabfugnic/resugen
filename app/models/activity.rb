@@ -43,13 +43,16 @@ class Activity
 
 
 
+  protected
   # Validation method
   def end_date_is_not_before_begin_date
+    return unless end_date.present?
     errors.add(:end_date, "can't be before the begin_date") if end_date < begin_date
   end
 
   # Validation method  
   def begin_date_is_not_in_the_future
+    return unless begin_date.present?
     errors.add(:begin_date, "can't be in the future") if begin_date > Date.today
   end
   
