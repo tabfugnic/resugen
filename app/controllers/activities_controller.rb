@@ -24,7 +24,8 @@ class ActivitiesController < ApplicationController
   # GET /activities/new
   # GET /activities/new.json
   def new
-    @activity = Activity.new
+    @activity = params[:type].constantize.new 
+    #TODO: This desperately needs to be changed
     5.times { @activity.details.build }
     respond_to do |format|
       format.html # new.html.erb
@@ -41,7 +42,7 @@ class ActivitiesController < ApplicationController
   # POST /activities
   # POST /activities.json
   def create
-    @activity = Activity.new(params[:activity])
+    @activity = params[:type].constantize.new(params[params[:type].to_sym])
     @activity.details.keep_if { |d| d.content.present? }
     current_user.activities << @activity
 
