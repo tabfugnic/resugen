@@ -6,6 +6,7 @@
       %ul
         - @activity.errors.full_messages.each do |msg|
           %li= msg
+  = hidden_field_tag :type, params[:type]
   .field
     = f.label :name
     = f.text_field :name
@@ -21,7 +22,7 @@
   .field
     = f.label :end_date
     = f.text_field :end_date, class: "datepicker"
-  - if :_type == "Education"
+  - if @activity._type == "Education"
     .field
       = f.label :score
       = f.number_field :score
