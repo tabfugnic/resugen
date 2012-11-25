@@ -32,7 +32,17 @@ class Activity
     end
   end
 
-  private
+  def self.inherited(child)
+    child.instance_eval do
+      def model_name
+        Activity.model_name
+      end
+    end
+    super
+  end
+
+
+
   # Validation method
   def end_date_is_not_before_begin_date
     errors.add(:end_date, "can't be before the begin_date") if end_date < begin_date
