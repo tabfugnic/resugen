@@ -7,5 +7,6 @@ FactoryGirl.define do
     family_name "Doe"
     password "1234567"
     password_confirmation { |u| u.password }
+    association :activity
   end
 end

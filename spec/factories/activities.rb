@@ -7,5 +7,6 @@ FactoryGirl.define do
     summary "MyString"
     begin_date "2012-11-10"
     end_date "2012-11-10"
+    association :detail
   end
 end
