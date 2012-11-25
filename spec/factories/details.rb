@@ -3,5 +3,6 @@
 FactoryGirl.define do
   factory :detail do
     content "MyString"
+    activity
   end
 end
