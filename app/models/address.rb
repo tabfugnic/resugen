@@ -12,6 +12,6 @@ class Address
   
   validates_presence_of :city, :country
 
-  belongs_to :user
+  #belongs_to :user
   belongs_to :activity
 end

@@ -13,7 +13,7 @@
     %th
     %th
 
-  = render partial: @activities
+  = render partial: "activity", collection: @activities
 %br
 
 = link_to 'New Employment', new_activity_path({type: Employment})
