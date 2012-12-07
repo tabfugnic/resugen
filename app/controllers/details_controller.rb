@@ -2,7 +2,7 @@ class DetailsController < ApplicationController
   # GET /details
   # GET /details.json
   def index
-    @details = Detail.all
+    @details = current_user.activities.find(params[:activity_id]).details
 
     respond_to do |format|
       format.html # index.html.erb

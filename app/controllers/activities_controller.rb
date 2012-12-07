@@ -42,8 +42,9 @@ class ActivitiesController < ApplicationController
   # POST /activities
   # POST /activities.json
   def create
-    @activity = params[:type].constantize.new(params[params[:type].to_sym])
-    @activity.details.keep_if { |d| d.content.present? }
+    @activity = params[:type].constantize.new(params[:activity])
+    # I thought this was supposed to be destructive
+    @activity.details.keep_if { |d| p d; p d.content; p d.content.present?; d.content.present? }
     current_user.activities << @activity
 
     respond_to do |format|
