@@ -1,0 +1,3 @@
+class Employment < Activity
+  
+end

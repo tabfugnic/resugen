@@ -57,24 +57,3 @@ class Activity
   end
   
 end
-
-
-class Employment < Activity
-
-end
-
-class Volunteer < Activity
-
-end
-
-class Personal < Activity
-
-end
-
-class Art < Activity
-
-end
-
-class Project < Activity
-
-end
