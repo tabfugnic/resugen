@@ -19,8 +19,6 @@ class Activity
   accepts_nested_attributes_for :details, :address
 
   ##
-  # Ending Method
-  #
   # Prettify the way end_date looks. Display "Present"
   # when nil or greater than today's date.
   ##
@@ -32,6 +30,10 @@ class Activity
     end
   end
 
+  ##
+  # Make sure all child instances report 
+  # coming from activity
+  ##
   def self.inherited(child)
     child.instance_eval do
       def model_name
