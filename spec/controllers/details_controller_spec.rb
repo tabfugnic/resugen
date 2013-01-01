@@ -4,131 +4,141 @@ describe DetailsController do
   before :each do
     controller.stub(:authenticate_user!).and_return(true)
   end
-  describe "GET index" do
-    before :each do
-      @detail = FactoryGirl.create(:detail)
+  describe "#activity" do
+    it "assigns activity" do
+      detail = FactoryGirl.create :detail
+      controller.stub(:current_user).and_return detail.activity.user
+      controller.stub(:params).and_return( { :activity_id => detail.activity.id } )
+      controller.send(:activity).should == detail.activity
     end
+  end
+  describe "GET index" do
     it "assigns all details as @details" do
-      get :index, :activity_id => @detail.activity
+      detail = FactoryGirl.create(:detail)
+      controller.stub(:activity).and_return(detail.activity)
+      get :index
       assigns(:details).to_a.should eq([detail])
     end
   end
 
   describe "GET show" do
     it "assigns the requested detail as @detail" do
-      detail = Detail.create! valid_attributes
-      get :show, {:id => detail.to_param}, valid_session
+      pending "Show method isn't actually used"
+      detail = FactoryGirl.create(:detail)
+      controller.stub(:current_user).and_return(detail.activity.user)
+      get :show, {:activity_id => detail.activity, :id => detail}
       assigns(:detail).should eq(detail)
     end
   end
 
   describe "GET new" do
     it "assigns a new detail as @detail" do
-      get :new, {}, valid_session
+      detail = FactoryGirl.create(:detail)
+      get :new
       assigns(:detail).should be_a_new(Detail)
     end
   end
 
   describe "GET edit" do
     it "assigns the requested detail as @detail" do
-      detail = Detail.create! valid_attributes
-      get :edit, {:id => detail.to_param}, valid_session
+      detail = FactoryGirl.create(:detail)
+      controller.stub(:activity).and_return(detail.activity)
+      get :edit, { :id => detail }
       assigns(:detail).should eq(detail)
     end
   end
 
   describe "POST create" do
+    before :each do
+      @activity = FactoryGirl.create(:activity)
+      @detail_attributes = FactoryGirl.attributes_for(:detail)
+      controller.stub(:activity).and_return @activity
+    end
     describe "with valid params" do
       it "creates a new Detail" do
         expect {
-          post :create, {:detail => valid_attributes}, valid_session
-        }.to change(Detail, :count).by(1)
+          post :create, {:detail => @detail_attributes }
+        }.to change(@activity.details, :count).by(1)
       end
 
       it "assigns a newly created detail as @detail" do
-        post :create, {:detail => valid_attributes}, valid_session
+        post :create, {:detail => @detail_attributes }
         assigns(:detail).should be_a(Detail)
         assigns(:detail).should be_persisted
       end
 
       it "redirects to the created detail" do
-        post :create, {:detail => valid_attributes}, valid_session
-        response.should redirect_to(Detail.last)
+        post :create, {:detail => @detail_attributes}
+        response.should redirect_to(@activity.details.last)
       end
     end
 
     describe "with invalid params" do
       it "assigns a newly created but unsaved detail as @detail" do
-        # Trigger the behavior that occurs when invalid params are submitted
         Detail.any_instance.stub(:save).and_return(false)
-        post :create, {:detail => {}}, valid_session
+        post :create, {:detail => {}}
         assigns(:detail).should be_a_new(Detail)
       end
 
       it "re-renders the 'new' template" do
-        # Trigger the behavior that occurs when invalid params are submitted
         Detail.any_instance.stub(:save).and_return(false)
-        post :create, {:detail => {}}, valid_session
+        post :create, {:detail => {}}
         response.should render_template("new")
       end
     end
   end
 
   describe "PUT update" do
+    before :each do
+      @detail = FactoryGirl.create(:detail)
+      controller.stub(:activity).and_return @detail.activity
+    end
     describe "with valid params" do
       it "updates the requested detail" do
-        detail = Detail.create! valid_attributes
-        # Assuming there are no other details in the database, this
-        # specifies that the Detail created on the previous line
-        # receives the :update_attributes message with whatever params are
-        # submitted in the request.
         Detail.any_instance.should_receive(:update_attributes).with({'these' => 'params'})
-        put :update, {:id => detail.to_param, :detail => {'these' => 'params'}}, valid_session
+        put :update, {:id => @detail.to_param, :detail => {'these' => 'params'}}
       end
 
       it "assigns the requested detail as @detail" do
-        detail = Detail.create! valid_attributes
-        put :update, {:id => detail.to_param, :detail => valid_attributes}, valid_session
-        assigns(:detail).should eq(detail)
+        put :update, {:id => @detail.to_param, :detail => FactoryGirl.attributes_for(:detail)}
+        assigns(:detail).should eq(@detail)
       end
 
       it "redirects to the detail" do
-        detail = Detail.create! valid_attributes
-        put :update, {:id => detail.to_param, :detail => valid_attributes}, valid_session
-        response.should redirect_to(detail)
+        put :update, {:id => @detail.to_param, :detail => FactoryGirl.attributes_for(:detail)}
+        response.should redirect_to(@detail)
       end
     end
 
     describe "with invalid params" do
       it "assigns the detail as @detail" do
-        detail = Detail.create! valid_attributes
-        # Trigger the behavior that occurs when invalid params are submitted
         Detail.any_instance.stub(:save).and_return(false)
-        put :update, {:id => detail.to_param, :detail => {}}, valid_session
-        assigns(:detail).should eq(detail)
+        put :update, {:id => @detail.to_param, :detail => {}}
+        assigns(:detail).should eq(@detail)
       end
 
       it "re-renders the 'edit' template" do
-        detail = Detail.create! valid_attributes
-        # Trigger the behavior that occurs when invalid params are submitted
         Detail.any_instance.stub(:save).and_return(false)
-        put :update, {:id => detail.to_param, :detail => {}}, valid_session
+        put :update, {:id => @detail.to_param, :detail => {}}
         response.should render_template("edit")
       end
     end
   end
 
   describe "DELETE destroy" do
+    before :each do
+      @detail = FactoryGirl.create(:detail)
+      @activity = @detail.activity
+      controller.stub(:activity).and_return @activity
+    end
     it "destroys the requested detail" do
-      detail = Detail.create! valid_attributes
       expect {
-        delete :destroy, {:id => detail.to_param}, valid_session
-      }.to change(Detail, :count).by(-1)
+        delete :destroy, {:id => @detail.to_param }
+      }.to change(@activity.details, :count).by(-1)
     end
 
     it "redirects to the details list" do
-      detail = Detail.create! valid_attributes
-      delete :destroy, {:id => detail.to_param}, valid_session
+      delete :destroy, {:id => @detail.to_param}
       response.should redirect_to(details_url)
     end
   end

@@ -1,8 +1,9 @@
 class DetailsController < ApplicationController
+
   # GET /details
   # GET /details.json
   def index
-    @details = current_user.activities.find(params[:activity_id]).details
+    @details = activity.details
 
     respond_to do |format|
       format.html # index.html.erb
@@ -13,7 +14,7 @@ class DetailsController < ApplicationController
   # GET /details/1
   # GET /details/1.json
   def show
-    @detail = Detail.find(params[:id])
+    @detail = activity.find(params[:activity_id]).details.find(:id)
 
     respond_to do |format|
       format.html # show.html.erb
@@ -34,13 +35,14 @@ class DetailsController < ApplicationController
 
   # GET /details/1/edit
   def edit
-    @detail = Detail.find(params[:id])
+    @detail = activity.details.find(params[:id])
   end
 
   # POST /details
   # POST /details.json
   def create
     @detail = Detail.new(params[:detail])
+    activity.details << @detail
 
     respond_to do |format|
       if @detail.save
@@ -56,7 +58,7 @@ class DetailsController < ApplicationController
   # PUT /details/1
   # PUT /details/1.json
   def update
-    @detail = Detail.find(params[:id])
+    @detail = activity.details.find(params[:id])
 
     respond_to do |format|
       if @detail.update_attributes(params[:detail])
@@ -72,12 +74,17 @@ class DetailsController < ApplicationController
   # DELETE /details/1
   # DELETE /details/1.json
   def destroy
-    @detail = Detail.find(params[:id])
+    @detail = activity.details.find(params[:id])
     @detail.destroy
 
     respond_to do |format|
       format.html { redirect_to details_url }
       format.json { head :no_content }
     end
+  end
+  private
+
+  def activity
+    return current_user.activities.find(params[:activity_id])
   end
 end
