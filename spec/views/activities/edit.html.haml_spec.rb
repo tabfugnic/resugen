@@ -2,11 +2,7 @@ require 'spec_helper'
 
 describe "activities/edit" do
   before(:each) do
-    @activity = assign(:activity, stub_model(Activity,
-      :name => "MyString",
-      :title => "MyString",
-      :summary => "MyString"
-    ))
+    @activity = assign(:activity, FactoryGirl.create(:activity))
   end
 
   it "renders the edit activity form" do
