@@ -32,5 +32,12 @@ group :test, :development do
   gem 'mongoid-rspec'
   gem 'factory_girl_rails'
   gem 'capybara'
+  gem 'spork'
+  gem 'guard'
+  gem 'guard-spork'
+  gem 'guard-rspec'
+  gem 'rb-inotify', '~> 0.8.8', :require => false
+  gem 'rb-fsevent', :require => false
+  gem 'rb-fchange', :require => false
 end
 
