@@ -23,7 +23,7 @@ describe Activity do
     end
   end
   
-  context "ending method" do
+  describe "#ending" do
     before :each do
       @activity = FactoryGirl.build(:activity)
     end
@@ -40,5 +40,20 @@ describe Activity do
     end
 
   end
-  
+  describe "#address" do
+    before :each do
+      @activity = FactoryGirl.create(:activity)
+      @address = FactoryGirl.create(:address, :user => @activity.user)
+    end
+    it "saves a reference of address to the activity" do
+      @activity.address = @address
+      @activity.save
+      @activity._address_id.should == @address._id
+    end
+    it "references address on user" do
+      @activity._address_id = @address._id
+      @activity.address.should == @address
+    end
+  end
+
 end

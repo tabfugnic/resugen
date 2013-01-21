@@ -2,11 +2,12 @@
 
 FactoryGirl.define do
   factory :address do
-    address1 "MyString"
-    address2 "MyString"
-    city "MyString"
-    country "MyString"
-    state "MyString"
-    zip_code 1
+    address1 "86th West Example Lane"
+    address2 "Apt 84B"
+    city "Example"
+    country "USA"
+    state "Maine"
+    zip_code 53343
+    user
   end
 end
