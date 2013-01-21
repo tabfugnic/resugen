@@ -89,9 +89,9 @@ class User
   field :family_name, :as => :last_name, :type => String, :default => ""
   attr_accessible :given_name, :family_name, :email, :password, :password_confirmation, :remember_me, :created_at, :updated_at
 
+  embeds_many :addresses
   embeds_many :activities
-  has_one :address
-
+ 
   ## 
   # to_s
   # Getting the string of a user instance

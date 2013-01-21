@@ -7,6 +7,7 @@ class Activity
   field :name, type: String
   field :begin_date, type: Date
   field :end_date, type: Date
+  field :_address_id, type: Moped::BSON::ObjectId
   
   validates_presence_of :name, :begin_date
   validate :end_date_is_not_before_begin_date, 
@@ -14,9 +15,8 @@ class Activity
 
   embeds_many :details
   embedded_in :user
-  has_one :address
 
-  accepts_nested_attributes_for :details, :address
+  accepts_nested_attributes_for :details
 
   ##
   # Prettify the way end_date looks. Display "Present"
@@ -43,7 +43,19 @@ class Activity
     super
   end
 
+  ##
+  # Assign address to activity from user
+  ##
+  def address=(address)
+    update_attribute(:_address_id, address._id)
+  end
 
+  ##
+  #  Return referenced user address
+  ##
+  def address
+    user.addresses.find(_address_id)    
+  end
 
   protected
   # Validation method
