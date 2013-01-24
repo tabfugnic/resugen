@@ -1,4 +1,4 @@
-https://travis-ci.org/tabfugnic/resugen.png
+{<img src="https://travis-ci.org/tabfugnic/resugen.png"/>}[https://travis-ci.org/tabfugnic/resugen]
 
 == Resugen
 
