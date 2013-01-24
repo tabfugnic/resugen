@@ -1,3 +1,5 @@
+https://travis-ci.org/tabfugnic/resugen.png
+
 == Resugen
 
 An attempt to hold user content and attempt to generate focused resumes based on simple templates.
