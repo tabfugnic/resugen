@@ -7,6 +7,7 @@ FactoryGirl.define do
     city "Example"
     country "USA"
     state "Maine"
+    home false
     zip_code 53343
     user
   end

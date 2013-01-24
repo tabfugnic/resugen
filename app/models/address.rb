@@ -7,6 +7,7 @@ class Address
   field :city, type: String
   field :country, type: String
   field :state, type: String
+  field :home, type: Boolean
 
   field :zip_code, type: Integer
   
