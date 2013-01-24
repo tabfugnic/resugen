@@ -5,7 +5,8 @@ describe AddressesController do
   before(:each) do
     controller.stub(:authenticate_user!).and_return(true)
     @address = FactoryGirl.create(:address)
-    controller.stub(:current_user).and_return(@address.user)
+    @user = @address.user
+    controller.stub(:current_user).and_return(@user)
   end
   
   describe "GET index" do
@@ -41,10 +42,10 @@ describe AddressesController do
       it "creates a new Address" do
         expect {
           post :create, {:address => valid_address}
-        }.to change(Address, :count).by(1)
+        }.to change(@user.addresses, :count).by(1)
       end
 
-      it "assigns a newly created @address as @@address" do
+      it "assigns a newly created address as @address" do
         post :create, {:address => valid_address}
         assigns(:address).should be_a(Address)
         assigns(:address).should be_persisted
@@ -52,12 +53,12 @@ describe AddressesController do
 
       it "redirects to the created @address" do
         post :create, {:address => valid_address}
-        response.should redirect_to(Address.last)
+        response.should redirect_to(@user.addresses.last)
       end
     end
 
     describe "with invalid params" do
-      it "assigns a newly created but unsaved @address as @@address" do
+      it "assigns a newly created but unsaved address as @address" do
         Address.any_instance.stub(:save).and_return(false)
         post :create, {:address => {}}
         assigns(:address).should be_a_new(Address)
@@ -108,13 +109,12 @@ describe AddressesController do
     it "destroys the requested @address" do
       expect {
         delete :destroy, {:id => @address.to_param}
-      }.to change(Address, :count).by(-1)
+      }.to change(@user.addresses, :count).by(-1)
     end
 
     it "redirects to the @addresses list" do
       delete :destroy, {:id => @address.to_param}
-      response.should redirect_to(@addresses_url)
+      response.should redirect_to(addresses_url)
     end
   end
-
 end
