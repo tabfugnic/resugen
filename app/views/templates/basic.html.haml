@@ -1,0 +1,17 @@
+#about
+  %h1= current_user.fullname
+  = partial "address", :address => current_user.home_address
+  #contact
+    = current_user.email
+    = current_user.phone
+#objective
+  
+#experience
+  %h3 Related Work Experience
+  = render :partial => "experience", :collection => current_user.experiences
+#skills
+  %h3 Skills
+  = render :partial => "skill_group", :collection => @skill_groups
+#education
+  %h3 Education
+  = render :partial => "education", :collection => current_user.educations
