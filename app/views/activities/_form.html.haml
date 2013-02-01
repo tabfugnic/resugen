@@ -32,9 +32,13 @@
   .field
     = f.label :details
     %br
+    %hr
     = f.fields_for :details do |form|
       = render "/details/form", f: form, content: content
   .field
+    = f.label :address
+    %br
+    %hr
     = f.fields_for :address do |form|
       = render "/addresses/form", f: form
   .actions
