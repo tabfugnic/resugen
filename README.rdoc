@@ -8,8 +8,9 @@ An attempt to hold user content and attempt to generate focused resumes based on
 
 This application will be hosted somewhere in the future.
 
-Prequisites:
+Prerequisites:
 
+- MongoDB
 - Ruby 1.9
 - RubyGems
 - Bundler
