@@ -6,7 +6,7 @@ gem 'rails', '~> 3.2.6'
 gem 'devise'
 # Haml
 gem 'haml-rails'
-# Mongo 
+# MongoDB
 gem 'mongoid'
 gem 'bson_ext'
 # Jquery

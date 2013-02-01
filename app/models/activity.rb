@@ -47,14 +47,15 @@ class Activity
   # Assign address to activity from user
   ##
   def address=(address)
+    address = user.addresses.create(address) unless address.is_a? Address
     update_attribute(:_address_id, address._id)
-  end
+  end 
 
   ##
   #  Return referenced user address
   ##
   def address
-    user.addresses.find(_address_id)    
+    user.addresses.find(_address_id) if _address_id
   end
 
   protected

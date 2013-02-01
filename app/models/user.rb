@@ -87,6 +87,7 @@ class User
   index({ email: 1 }, { unique: true, background: true })
   field :given_name,  :as => :first_name, :type => String, :default => ""
   field :family_name, :as => :last_name, :type => String, :default => ""
+  field :phone_number, :type => String
   attr_accessible :given_name, :family_name, :email, :password, :password_confirmation, :remember_me, :created_at, :updated_at
 
   embeds_many :addresses
@@ -99,6 +100,18 @@ class User
   ##
   def to_s
     return email
+  end
+  
+  ##
+  # fullname
+  # return full given and family name 
+  #
+  def fullname
+    return "#{given_name} #{family_name}"
+  end
+
+  def home_address
+    return addresses.where(:home => true).first
   end
 
 end

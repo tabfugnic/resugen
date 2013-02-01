@@ -45,15 +45,43 @@ describe Activity do
       @activity = FactoryGirl.create(:activity)
       @address = FactoryGirl.create(:address, :user => @activity.user)
     end
-    it "saves a reference of address to the activity" do
-      @activity.address = @address
-      @activity.save
-      @activity._address_id.should == @address._id
+    it "fails gracefully when activity doesn't have address" do
+      @activity.address.should be_nil
     end
     it "references address on user" do
       @activity._address_id = @address._id
       @activity.address.should == @address
     end
   end
-
+  describe "#address=" do
+    before(:each) do
+      @user = FactoryGirl.create(:user)   
+      @address = FactoryGirl.attributes_for(:address)
+    end
+    it "saves a reference of address to the activity" do
+      activity = FactoryGirl.create(:activity)
+      address = FactoryGirl.create(:address, :user => activity.user)      
+      activity.address = address
+      activity._address_id.should == address._id
+    end
+    context "creating a new activity" do
+      it "assigns address" do
+        address = FactoryGirl.attributes_for(:address)
+        activity = FactoryGirl.build(:activity, :address => address, :user => @user)
+        @user.save
+        @user.addresses.should_not be_nil
+      end
+     end
+     context "adding address" do
+       subject { FactoryGirl.create(:activity, :user => @user) }
+       it "address is set on user" do
+         expect { subject.address = @address }.to change(@user.addresses, :count).by(1)
+       end
+       it "assigns address to activity" do
+        subject.address.should be_nil
+        subject.address = @address
+        subject.address.should_not be_nil
+      end
+    end
+  end
 end
